@@ -50,6 +50,11 @@ charges_turbo_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Tur
 
 charges_turbo_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
+#Charges - Rapid
+charges_rapid_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+
+charges_rapid_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+
 ##### Ranges #####
 turbo_numPeptides <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Ranges_turbo/FDR summary_turboRanges.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
@@ -217,15 +222,51 @@ format_charge_100 <- function(r){
   return(x)
 }
 
+format_charge_2000 <- function(r){
+  y <- gsub("_peptides.*", "" ,r[[1]])
+  y <- gsub(".*100_", "", y)
+  z <- as.numeric(y)
+  
+  x <- data.frame(z, r[,2:5])
+  
+  colnames(x) <- c("Max", "2", "3", "4", "5")
+  
+  return(x)
+}
+  
+gsub("_peptides.*", "", charges_turbo_2000[[1]])
 
 # Charges - turbo
+#100 side
 RFcharges_100_t <- format_charge_100(charges_turbo_100)
 RFcharges_100_t <- RFcharges_100_t[order(as.numeric(as.character(RFcharges_100_t$Min))),]
 charges_t_100_wide <- melt(RFcharges_100_t, 'Min')
 colnames(charges_t_100_wide) <- c("Min", "Charge", "Count")
 
-typeof(RFcharges_100_t$Min)
+#2000 side
+RFcharges_2000_t <- format_charge_2000(charges_turbo_2000)
+RFcharges_2000_t <- RFcharges_2000_t[order(as.numeric(as.character(RFcharges_2000_t$Max))),]
 
+charges_t_2000_wide <- melt(RFcharges_2000_t, 'Max')
+colnames(charges_t_2000_wide) <- c("Max", "Charge", "Count")
+
+
+# Charges - rapid
+#100 side
+RFcharges_100_r <-format_charge_100(charges_rapid_100)
+RFcharges_100_r <- RFcharges_100_r[order(as.numeric(as.character(RFcharges_100_r$Min))),]
+
+charges_r_100_wide <- melt(RFcharges_100_r, 'Min')
+colnames(charges_r_100_wide) <- c("Min", "Charge", "Count")
+
+#2000 side
+RFcharges_2000_r <- format_charge_2000(charges_rapid_2000)
+RFcharges_2000_r <- RFcharges_2000_r[order(as.numeric(as.character(RFcharges_2000_r$Max))),]
+
+charges_r_2000_wide <- melt(RFcharges_2000_r, 'Max')
+colnames(charges_r_2000_wide) <- c("Max" , "Charge", "Count")
+
+# removed lines code reformating
 reformat_removedlines <- function(r){
   y <- gsub(".*ITMS_", "", r[,1])
   y <- gsub("_2000.*", "", y)
@@ -528,9 +569,9 @@ m <- ggplot(reformated_normal_numPeptides_2000, aes(x = MaxRange, y = Peptides))
 m + labs(title = "Normal - Number of Peptides from Spectra Sliced starting at 2000 m/z", x = "m/z", y = "Number of Peptides")
 
 ######### Charges ############
+#Turbo - 100
 charge.colors = as.numeric(factor(charges_t_100_wide$Charge))
 charges_t_100_wide$Charge <- as.factor(charges_t_100_wide$Charge)
-
 m <- ggplot(charges_t_100_wide, aes(x = Min, y = Count, group = factor(Charge), color = Charge)) +
   scale_x_continuous(breaks = seq(100, 2000, 200)) +
   #xlim(200, 2000) +
@@ -541,6 +582,44 @@ m <- ggplot(charges_t_100_wide, aes(x = Min, y = Count, group = factor(Charge), 
 
 m + labs(title = "Turbo - Charge distrubution", x = "m/z", y = "Count")
 
+
+#Turbo - 2000
+charge.colors = as.numeric(factor(charges_t_2000_wide$Charge))
+#charges_t_100_wide$Charge <- as.factor(charges_t_100_wide$Charge)
+m <- ggplot(charges_t_2000_wide, aes(x = Max, y = Count, group = factor(Charge), color = Charge)) +
+  scale_x_continuous(breaks = seq(100, 2000, 200)) +
+  #xlim(200, 2000) +
+  geom_point(size = 4) +
+  geom_line(linetype = "dashed")+
+  theme_light() 
+#scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
+
+m + labs(title = "Turbo - Charge distrubution", x = "m/z", y = "Count")
+
+
+#Rapid - 100
+charge.colors = as.numeric(factor(charges_r_100_wide$Charge))
+m <- ggplot(charges_r_100_wide, aes(x = Min, y = Count, group = factor(Charge), color = Charge)) +
+  scale_x_continuous(breaks = seq(100, 2000, 200)) +
+  #xlim(200, 2000) +
+  geom_point(size = 4) +
+  geom_line(linetype = "dashed")+
+  theme_light() 
+#scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
+
+m + labs(title = "Rapid - Charge distrubution", x = "m/z", y = "Count")
+
+#Rapid = 2000
+charge.colors = as.numeric(factor(charges_r_2000_wide$Charge))
+m <- ggplot(charges_r_2000_wide, aes(x = Max, y = Count, group = factor(Charge), color = Charge)) +
+  scale_x_continuous(breaks = seq(100, 2000, 200)) +
+  #xlim(200, 2000) +
+  geom_point(size = 4) +
+  geom_line(linetype = "dashed")+
+  theme_light() 
+#scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
+
+m + labs(title = "Rapid - Charge distrubution", x = "m/z", y = "Count")
 
 ######### SLICED - Lines removed #########
 colnames(reformated_removed_turbo_100)
