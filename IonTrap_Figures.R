@@ -9,61 +9,61 @@ library(plyr)
 
 ######### Read in Data #########
 # Optimize max injection time
-Turbo <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Turbo_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
-Rapid <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Rapid_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
-Normal <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Normal_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
+Turbo <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Turbo_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
+Rapid <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Rapid_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
+Normal <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Normal_scans_perMaxInjectionTime.csv", header = TRUE, sep = ",")
 
-Allspeeds_1000_optimalInjection <- read.csv("E:/Projects/Proteomics/IontrapScanRange/OptimalMaxInjection/OptimalInjection_allSpeeds.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+Allspeeds_1000_optimalInjection <- read.csv("G:/Projects/Proteomics/IontrapScanRange/OptimalMaxInjection/OptimalInjection_allSpeeds.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 ##### Slice #### 
 #Turbo
-NumPeptides_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/NumPeptides_slicefrom2000.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-NumPeptides_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/NumPeptides_slicefrom100.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+NumPeptides_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/NumPeptides_slicefrom2000.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+NumPeptides_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/NumPeptides_slicefrom100.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 #Rapid
-rapid_numPeptides_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/FDR summary_100-1700.csv", header = T, sep = ",", stringsAsFactors = FALSE)
+rapid_numPeptides_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/FDR summary_100-1700.csv", header = T, sep = ",", stringsAsFactors = FALSE)
 
-rapid_numPeptides_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/FDR summary_250-2000.csv", header = T, sep = ",", stringsAsFactors = FALSE)
+rapid_numPeptides_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/FDR summary_250-2000.csv", header = T, sep = ",", stringsAsFactors = FALSE)
 
 #Normal
-normal_numPeptides_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_100end/FDR summary_100_1450.csv", header = T, sep = ",", stringsAsFactors = F)
+normal_numPeptides_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_100end/FDR summary_100_1450.csv", header = T, sep = ",", stringsAsFactors = F)
 
-normal_numPeptides_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_2000end/FDR summary_300_2000.csv", header = T, sep = ",", stringsAsFactors = F)
+normal_numPeptides_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_2000end/FDR summary_300_2000.csv", header = T, sep = ",", stringsAsFactors = F)
 
 #Removed - TURBO
-removed_turbo_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from 100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_turbo_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from 100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
-removed_turbo_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_turbo_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
 #Removed - RAPID
-removed_rapid_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_rapid_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
-removed_rapid_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_rapid_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
 #Removed - NORMAL
-removed_normal_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_normal_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_100end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
-removed_normal_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
+removed_normal_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_normal/From_2000end/DTA_files/outfile.csv", header = T, sep = ",", stringsAsFactors = F)
 
 #Charges - Turbo
-charges_turbo_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from 100end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+charges_turbo_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from 100end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
-charges_turbo_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+charges_turbo_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Turbo/Slice25_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 #Charges - Rapid
-charges_rapid_100 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+charges_rapid_100 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from100end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
-charges_rapid_2000 <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+charges_rapid_2000 <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Slice_Rapid/Slice_from2000end/peptides/ChargesOutfile.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 ##### Ranges #####
-turbo_numPeptides <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Ranges_turbo/FDR summary_turboRanges.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+turbo_numPeptides <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Ranges_turbo/FDR summary_turboRanges.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
-rapid_numPeptides <- read.csv("E:/Projects/Proteomics/IontrapScanRange/Ranges_rapid/FDR summary_rapidRanges.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+rapid_numPeptides <- read.csv("G:/Projects/Proteomics/IontrapScanRange/Ranges_rapid/FDR summary_rapidRanges.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
-old_new <- read.csv("E:/Projects/Proteomics/IontrapScanRange/old_vs_new_ranges_FDRoutput.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+old_new <- read.csv("G:/Projects/Proteomics/IontrapScanRange/old_vs_new_ranges_FDRoutput.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 ###### Product Tolerances #####
-PSMs_productTolerance <- read.csv("E:/Projects/Proteomics/IontrapScanRange/PMS_ProductIonTolerance_20181221.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+PSMs_productTolerance <- read.csv("G:/Projects/Proteomics/IontrapScanRange/PMS_ProductIonTolerance_20181221.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 ######### Format Data #########
 
@@ -199,7 +199,8 @@ reformat_fdr_names_2000 <- function(r){
   
   x <- data.frame(z, q, v)
   colnames(x) <- c("MaxRange", "PSMs" , "Peptides")
-  return(output)
+  x <- x[order(as.numeric(as.character(x$MaxRange))),]
+  return(x)
 }
 
 # Slice data - RAPID
@@ -210,6 +211,8 @@ reformated_rapid_numPeptides_2000 <- reformat_fdr_names_2000(rapid_numPeptides_2
 reformated_normal_numPeptides_100 <- reformat_fdr_names_100(normal_numPeptides_100)
 reformated_normal_numPeptides_2000 <- reformat_fdr_names_2000(normal_numPeptides_2000)
 
+# Charges - turbo
+# Function for setting up data frame to summarize the charges data for each scanning speed
 format_charge_100 <- function(r){
   y <- gsub("_2000.*", "", r[[1]])
   y <- gsub(".*ITMS_", "", y)
@@ -236,7 +239,7 @@ format_charge_2000 <- function(r){
   
 gsub("_peptides.*", "", charges_turbo_2000[[1]])
 
-# Charges - turbo
+
 #100 side
 RFcharges_100_t <- format_charge_100(charges_turbo_100)
 RFcharges_100_t <- RFcharges_100_t[order(as.numeric(as.character(RFcharges_100_t$Min))),]
@@ -266,6 +269,8 @@ RFcharges_2000_r <- RFcharges_2000_r[order(as.numeric(as.character(RFcharges_200
 charges_r_2000_wide <- melt(RFcharges_2000_r, 'Max')
 colnames(charges_r_2000_wide) <- c("Max" , "Charge", "Count")
 
+
+# Production ion removal code
 # removed lines code reformating
 reformat_removedlines <- function(r){
   y <- gsub(".*ITMS_", "", r[,1])
