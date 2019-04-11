@@ -437,19 +437,21 @@ p <- ggplot(maxInjection_all, aes(x = Range, y = Max_InjTime,
 
 p + labs(title = "Max Injection at m/z Range in MS/MS", x = "m/z", y = "Maximum Injection Time (ms)") 
 
+#max injection for mz range 100-1100
 speed.colors = as.numeric(factor(long_1000$scanSpeed))
-p <- ggplot(long_1000, aes(x = Max_InjectionTime, y = NumberOfScans, group = factor(scanSpeed))) + #, color = speed.colors)) +
+p <- ggplot(long_1000, aes(x = Max_InjectionTime, y = NumberOfScans, 
+                           group = factor(scanSpeed), color = scanSpeed)) + #, color = speed.colors)) +
   scale_x_continuous(breaks = seq(2, 44, 2)) +
-  scale_y_continuous(breaks = seq(200,600, 100)) +
+  scale_y_continuous(breaks = seq(100,600, 100)) +
   geom_point(size = 5) +
   geom_line(linetype = "dashed")+
-  theme_light()
-#scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
+  theme_light()+
+  scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
 
-p
+p + ylim(200,600) + labs(title = "Optimal Max Injection for 1000 m/z range", x = "Injection Time (ms)", y = "Number of MS/MS scans")
 
 ######### Number of Scans For Various Scan Speeds at Maximum Injection #########
-
+speed.colors = as.numeric(factor(maxInjection_all$Speed))
 q <- ggplot(maxInjection_all, aes(x = Range, y = Hz, group = factor(Speed), color = Speed)) +
   scale_x_continuous(breaks = seq(200, 2000, 200)) +
   scale_y_continuous(breaks = seq(10,55, 5)) +
@@ -458,7 +460,7 @@ q <- ggplot(maxInjection_all, aes(x = Range, y = Hz, group = factor(Speed), colo
   theme_light() +
   scale_color_manual(values=c("steelblue2", "olivedrab3", "mediumorchid2"))
 
-q + labs(title = "Scan Speed", x = "m/z", y = "Hz") 
+q + labs(title = "Scan Speed", x = "m/z", y = "Estimated Hz") 
 
 ######### SLICED - For different scan speeds Peptides #########
 #Turbo - sliced from 2000
@@ -503,7 +505,7 @@ m <- ggplot(NumPeptides_100, aes(x=Peptides)) +
 m <- ggplot(reformated_removed_turbo_100, aes(x=NumberOfLinesRemoved)) +
   geom_histogram(bins = 100)
 
-df_3 <- data.frame(charges_turbo_100$Min,charges_turbo_100$charge3)
+df_3 <- data.frame(charges_t_100$Min,charges_t_100$charge3)
 colnames(df_3) <- c("Min", "charge3")
 
 colnames(charges_turbo_100)
@@ -697,7 +699,7 @@ p
 p <- ggplot(ranges_turbo_wide[-7,], aes(x = Range, y = Mean, group = 1)) +
   geom_bar(stat = "identity", color = "#6D696F" , fill = "#89469B", position = position_dodge())+
   scale_y_continuous(breaks = seq(0,130000, 20000)) +
-  scale_x_continuous(breaks = seq(500, 1300, 200))+
+  #scale_x_continuous(breaks = seq(500, 1300, 200))+
   geom_errorbar(aes(ymin=Mean-sd, ymax=Mean+sd) , width = .2, position = position_dodge(0.052))+
   theme_light()
 
